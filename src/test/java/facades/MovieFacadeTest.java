@@ -9,22 +9,25 @@ import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 //Uncomment the line below, to temporarily disable this test
-//@Disabled
 public class MovieFacadeTest {
 
     private static EntityManagerFactory emf;
     private static MovieFacade facade;
+    private final Movie m1 = new Movie(2001, "Lord of the Rings - The Fellowshop of the Ring", new String[]{"Elijah Wood", "Viggo Mortensen"});
+    private final Movie m2 = new Movie(1997, "Titanic", new String[]{"Kate Winslet", "Leonardo DiCaprio"});
+    private final Movie m3 = new Movie(2000, "Gladiator", new String[]{"Russel Crowe", "Joaquin Phoenix"});
 
     public MovieFacadeTest() {
     }
 
     @BeforeAll
     public static void setUpClass() {
-       emf = EMF_Creator.createEntityManagerFactoryForTest();
-       facade = MovieFacade.getFacadeExample(emf);
+        emf = EMF_Creator.createEntityManagerFactoryForTest();
+        facade = MovieFacade.getFacadeExample(emf);
     }
 
     @AfterAll
@@ -39,11 +42,10 @@ public class MovieFacadeTest {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            em.createNamedQuery("RenameMe.deleteAllRows").executeUpdate();
-            //em.persist(new Movie("Some txt", "More text"));
-            
-            //em.persist(new Movie("aaa", "bbb"));
-
+            em.createNamedQuery("Movie.deleteAllRows").executeUpdate();
+            em.persist(m1);
+            em.persist(m2);
+            em.persist(m3);
             em.getTransaction().commit();
         } finally {
             em.close();
@@ -58,7 +60,7 @@ public class MovieFacadeTest {
     // TODO: Delete or change this method 
     @Test
     public void testAFacadeMethod() {
-        assertEquals(2, facade.getRenameMeCount(), "Expects two rows in the database");
+        assertEquals(3, facade.getMovieCount(), "Expects two rows in the database");
     }
 
 }
