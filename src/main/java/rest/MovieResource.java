@@ -56,7 +56,7 @@ public class MovieResource {
         return GSON.toJson(allMovies);
     }
     
-    @Path("/title{title}")
+    @Path("/title/{title}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public String getMovieByTitle(@PathParam("title")String title){

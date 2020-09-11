@@ -37,64 +37,61 @@ public class MovieFacade {
         return emf.createEntityManager();
     }
 
-   
-
-    public long getMovieCount(){
+    public long getMovieCount() {
         EntityManager em = emf.createEntityManager();
-        try{
+        try {
             Query query = em.createNamedQuery("Movie.getMovieCount");
             Long movieCount = (long) query.getSingleResult();
             return movieCount;
-        }finally{  
+        } finally {
             em.close();
         }
     }
-    
-    public Movie getMovieById(long id){
+
+    public Movie getMovieById(long id) {
         EntityManager em = emf.createEntityManager();
-        try{
+        try {
             Query query = em.createNamedQuery("Movie.getMovieById");
             query.setParameter("id", id);
             Movie movie = (Movie) query.getSingleResult();
             return movie;
-        }finally{
+        } finally {
             em.close();
         }
     }
-    
-    public List<Movie> getMovieByTitle(String title){
+
+    public List<Movie> getMovieByTitle(String title) {
         EntityManager em = emf.createEntityManager();
-        try{
+        try {
             Query query = em.createNamedQuery("Movie.getByTitle");
             query.setParameter("title", title);
             List<Movie> movieList = query.getResultList();
             return movieList;
-        }finally{
+        } finally {
             em.close();
         }
     }
-    
-    public List<Movie> getAllMovies(){
+
+    public List<Movie> getAllMovies() {
         EntityManager em = emf.createEntityManager();
-        try{
+        try {
             Query query = em.createNamedQuery("Movie.getAll");
             List<Movie> allMovies = query.getResultList();
             return allMovies;
-        }finally{
+        } finally {
             em.close();
         }
     }
-    
-    public void deleteAllMovies(){
+
+    public void deleteAllMovies() {
         EntityManager em = emf.createEntityManager();
-        try{
+        try {
             em.getTransaction().begin();
             em.createNamedQuery("Movie.deleteAllRows").executeUpdate();
             em.getTransaction().commit();
-        }finally{
+        } finally {
             em.close();
         }
     }
-    
 
 }

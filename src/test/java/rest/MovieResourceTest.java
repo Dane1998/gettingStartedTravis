@@ -13,7 +13,10 @@ import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.util.HttpStatus;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.hamcrest.Matchers;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.is;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +24,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 //Uncomment the line below, to temporarily disable this test
 
-@Disabled
+
 public class MovieResourceTest {
 
     private static final int SERVER_PORT = 7777;
@@ -77,6 +80,7 @@ public class MovieResourceTest {
         }
     }
 
+    
     @Test
     public void testServerIsUp() {
         System.out.println("Testing is server UP");
@@ -92,19 +96,46 @@ public class MovieResourceTest {
     public void testDummyMsg() throws Exception {
         given()
                 .contentType("application/json")
-                .get("/movie/").then()
+                .get("/movie/")
+                .then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
                 .body("msg", equalTo("Hello World"));
     }
-
+    
+    @Disabled
     @Test
     public void testCount() throws Exception {
         given()
                 .contentType("application/json")
-                .get("/moive/count").then()
+                .get("/moive/count")
+                .then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
                 .body("count", equalTo(3));
+    }
+    
+    @Test
+    public void testAllMovies() throws Exception {
+        given()
+                .contentType("application/json")
+                .get("/movie/all")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.OK_200.getStatusCode())
+                .body("size()", is(3))
+                .and()
+                .body("title", hasItems("Lord of the Rings - The Fellowshop of the Ring","Titanic", "Gladiator"));
+    }
+    
+    @Test
+    public void testGetTitle() throws Exception{
+        given()
+                .contentType("application/json")
+                .get("/movie/title/Gladiator")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.OK_200.getStatusCode())
+                .body("[0].id", equalTo(m3.getId().intValue()));
     }
 }
