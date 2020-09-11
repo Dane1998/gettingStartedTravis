@@ -1,0 +1,59 @@
+
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            .myDiv{
+                width: 100px; 
+                height: 25px;
+                background-color:yellow; 
+                margin:1px;
+            }
+        </style>
+    </head>
+
+
+    <body>
+        <div id="d1" class="myDiv">1</div>
+        <div id="d2" class="myDiv">2</div>
+        <div id="outer">
+            <div id="d3" class="myDiv">3</div>
+            <div id="d4" class="myDiv">4</div>
+            <div id="d5" class="myDiv">5</div>
+            <div id="d6" class="myDiv">6</div>
+            <div id="d7" class="myDiv">7</div>
+            <div id="d8" class="myDiv">8</div>
+            <div id="d9" class="myDiv">9</div>
+            <div id="d10" class="myDiv">10</div>        
+        </div>
+
+        <p id="printText"></p>
+    </body>
+
+    <script>
+
+        let d1 = document.getElementById("d1")
+        d1.onclick = (x => printText.innerHTML = "Hi from: " + d1.id)
+
+        let d2 = document.getElementById("d2")
+        d2.onclick = (x => printText.innerHTML = "Hi from: " + d2.id)
+
+        function print(event){
+            let x = event.target
+        document.getElementById("printText").innerHTML = "Hi from: " + x.id
+        }
+
+        let outerDiv = document.getElementById("outer")
+        outerDiv.addEventListener('click', (event) => {
+            print(event)         
+        })
+        
+        
+        
+
+
+
+    </script>
+</html>
