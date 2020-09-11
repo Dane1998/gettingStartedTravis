@@ -11,8 +11,8 @@
         <table id="table"class="table"></table>
 
         <form id="frm">                          
-            Price:<input type="text" id="name" name="price" />
-            <button id="btn">Filter</button>        
+            Price:<input id="price" type="text" />
+            <button id="btn">Filter less than</button>        
         </form>
     </body>
 
@@ -26,6 +26,12 @@
         ]
 
         document.getElementById("table").innerHTML = loadTableData(cars)
+        
+        document.getElementById("btn").addEventListener("click", (e) =>{
+            e.preventDefault()
+            let cheapCars = cars.filter(x => x.price < document.getElementById("price").value)
+            document.getElementById("table").innerHTML = loadTableData(cheapCars)
+        })
 
         function loadTableData(array) {
             let dataHTML = array.map(n => "<tr><th>" + n.id + "</th><th>" + n.year + "</th><th>" + n.make + "</th><th>" + n.model + "</th><th>" + n.price + "</th></tr>")
